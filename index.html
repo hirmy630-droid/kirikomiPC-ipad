@@ -33,6 +33,8 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         .main-container { width: 100%; max-width: 420px; display: flex; flex-direction: column; flex-grow: 1; }
@@ -54,24 +56,31 @@
         .span-2 { grid-column: span 2 !important; }
         .span-4 { grid-column: span 4 !important; }
         .calc-cell.focused { background: #1c1c1e; box-shadow: inset 0 0 0 1.5px var(--ios-orange) !important; border-color: var(--ios-orange); z-index: 10; }
-        .input-label-left { font-size: 14px; font-weight: 500; color: var(--label-gray); margin-bottom: 0px; }
+        .input-label-left { font-size: 12px; font-weight: 500; color: #d1d1d6; margin-bottom: 0px; }
         .input-value { font-size: 27px; font-weight: 600; color: #ffffff; text-align: center; line-height: 1; }
         .input-value-lg { font-size: 28px; }
 
         /* テンキー */
-        .keypad-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--ios-border); margin: 0 12px 12px; border-radius: 0 0 16px 16px; overflow: hidden; border: 1px solid var(--ios-border); }
-        .key-btn { background: #1c1c1e; color: white; height: 62px; font-size: 24px; display: flex; align-items: center; justify-content: center; transition: background 0.1s; border: none; outline: none; }
-        .key-btn:active { background: #333; }
-        .key-btn.orange { background: var(--ios-orange); font-weight: 600; }
-        .key-btn.gray { background: #2c2c2e; color: var(--label-gray); font-size: 18px; font-weight: 600; }
+        .keypad-container { display: flex; flex-direction: column; gap: 1px; background: var(--ios-border); margin: 0 12px 12px; border-radius: 0 0 16px 16px; overflow: hidden; border: 1px solid var(--ios-border); }
+        .keypad-row { display: grid; gap: 1px; background: var(--ios-border); }
+        .row-top { grid-template-columns: repeat(4, 1fr); }
+        .row-bottom { grid-template-columns: repeat(11, 1fr); }
+        .key-btn { background: #1c1c1e; color: white; height: 50px; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: background 0.12s, transform 0.05s; border: none; outline: none; padding: 0; }
+        .key-btn:active { background: #333; transform: scale(0.98); }
+
+        /* 上段ファンクションキーの調和スタイル */
+        .key-fn { height: 48px; font-size: 15px; font-weight: 600; }
+        .key-fn.clear-btn { background: #262628; color: #d1d1d6; }
+        .key-fn.clear-btn:active { background: #363638; }
+        .key-fn.save-btn { background: #2c2217; color: var(--ios-orange); border: 1px solid rgba(255, 159, 10, 0.3); }
+        .key-fn.save-btn:active { background: #3d2e1c; }
+        .key-fn.history-btn { background: #1b2430; color: #5ac8fa; border: 1px solid rgba(10, 132, 255, 0.28); }
+        .key-fn.history-btn:active { background: #263345; }
 
         /* 履歴画面のデザイン */
         .history-view-container { background: #000000; margin: 0 12px 12px; border-radius: 16px; border: 0.5px solid var(--unfocused-border); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .history-section-content { padding: 16px 0; }
         .history-label-main { font-size: 14px !important; font-weight: 600; color: #ffffff; }
-        .history-label-sub { font-size: 13px !important; font-weight: 600; padding: 2px 10px; border-radius: 6px; }
-        .label-side { background: rgba(255, 159, 10, 0.15); color: #ff9f0a; }
-        .label-height { background: rgba(230, 118, 0, 0.15); color: #e67600; }
         .history-cat-section { padding: 12px; }
         .section-side { background: rgba(255, 159, 10, 0.03); }
         .section-height { background: rgba(230, 118, 0, 0.03); }
@@ -84,7 +93,6 @@
         .dir-switch-bar { background-color: #1c1c1e; padding: 2px; border-radius: 8px; display: inline-flex; }
         .dir-button { font-size: 13px; color: #aeaeb2; padding: 6px 12px; border: 2px solid transparent; font-weight: 500; }
         .dir-active { background-color: #3a3a3c; color: var(--theme-color); border: 2px solid var(--theme-color); border-radius: 6px; }
-        .preview-top-spacer { height: 37px; margin-bottom: 4px; }
         .preview-header-row {
             height: 37px;
             margin-bottom: 4px;
@@ -102,27 +110,23 @@
         #toast.show { opacity: 1; }
         .hidden { display: none !important; }
     
-/* Android fullscreen install UI */
-#installBtn{
-  position:fixed;
-  right:16px;
-  bottom:calc(16px + env(safe-area-inset-bottom));
-  z-index:9999;
-  border:none;
-  border-radius:14px;
-  background:#2563eb;
-  color:#fff;
-  padding:12px 16px;
-  font-size:14px;
-  font-weight:700;
-  box-shadow:0 10px 24px rgba(0,0,0,.35);
-  display:none;
-}
-#installBtn:active{transform:scale(.98)}
-body{
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-}
+        /* Android fullscreen install UI */
+        #installBtn {
+            position: fixed;
+            right: 16px;
+            bottom: calc(16px + env(safe-area-inset-bottom));
+            z-index: 9999;
+            border: none;
+            border-radius: 14px;
+            background: #2563eb;
+            color: #fff;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 10px 24px rgba(0,0,0,.35);
+            display: none;
+        }
+        #installBtn:active { transform: scale(.98); }
 
         .calc-split-layout,
         .history-split-layout {
@@ -174,24 +178,16 @@ body{
                 margin: 0;
             }
         }
+    </style>
 
-</style>
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#000000">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="切込">
-<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
-}
-</script>
-
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="切込">
+    <link rel="icon" type="image/png" href="./icon-192.png">
+    <link rel="apple-touch-icon" href="./icon-180.png">
 </head>
 <body id="mainBody">
 
@@ -216,6 +212,7 @@ if ('serviceWorker' in navigator) {
         <!-- 計算画面 -->
         <div id="viewCalc">
             <div class="calc-split-layout">
+                <!-- 左列: 横切込 -->
                 <div class="split-pane">
                     <div id="sideInputs">
                         <div class="cell-grid">
@@ -228,7 +225,7 @@ if ('serviceWorker' in navigator) {
                                 <div id="display-side_l2" class="input-value">0</div>
                             </div>
                             <div class="calc-cell span-2" onclick="focusInput('side_no')">
-                                <span class="input-label-left text-center">No.</span>
+                                <span class="input-label-left text-center">横</span>
                                 <div id="display-side_no" class="input-value">1</div>
                             </div>
                             <div class="calc-cell span-4" onclick="focusInput('side_l1')">
@@ -238,25 +235,27 @@ if ('serviceWorker' in navigator) {
                         </div>
                     </div>
 
+                    <!-- 横切込 テンキー（2行レイアウト: 1行目4キー, 2行目11キー） -->
                     <div id="keypadArea" class="keypad-container keypad-left">
-                        <button class="key-btn" onclick="pressSideKey('7')">7</button>
-                        <button class="key-btn" onclick="pressSideKey('8')">8</button>
-                        <button class="key-btn" onclick="pressSideKey('9')">9</button>
-                        <button class="key-btn gray" onclick="pressSideKey('clear')">C</button>
-
-                        <button class="key-btn" onclick="pressSideKey('4')">4</button>
-                        <button class="key-btn" onclick="pressSideKey('5')">5</button>
-                        <button class="key-btn" onclick="pressSideKey('6')">6</button>
-                        <button class="key-btn gray" onclick="pressSideKey('allClear')">AC</button>
-
-                        <button class="key-btn" onclick="pressSideKey('1')">1</button>
-                        <button class="key-btn" onclick="pressSideKey('2')">2</button>
-                        <button class="key-btn" onclick="pressSideKey('3')">3</button>
-                        <button class="key-btn orange row-span-2 h-full text-[18px]" onclick="pressSideKey('enter')">保存</button>
-
-                        <button class="key-btn" onclick="pressSideKey('0')">0</button>
-                        <button class="key-btn" onclick="pressSideKey('00')">00</button>
-                        <button class="key-btn text-[#0a84ff]" style="font-size: 15px;" onclick="switchTab('history')">履歴</button>
+                        <div class="keypad-row row-top">
+                            <button class="key-btn key-fn clear-btn" onclick="pressSideKey('clear')">C</button>
+                            <button class="key-btn key-fn clear-btn" onclick="pressSideKey('allClear')">AC</button>
+                            <button class="key-btn key-fn save-btn" onclick="pressSideKey('enter')">保存</button>
+                            <button class="key-btn key-fn history-btn" onclick="switchTab('history')">履歴</button>
+                        </div>
+                        <div class="keypad-row row-bottom">
+                            <button class="key-btn" onclick="pressSideKey('1')">1</button>
+                            <button class="key-btn" onclick="pressSideKey('2')">2</button>
+                            <button class="key-btn" onclick="pressSideKey('3')">3</button>
+                            <button class="key-btn" onclick="pressSideKey('4')">4</button>
+                            <button class="key-btn" onclick="pressSideKey('5')">5</button>
+                            <button class="key-btn" onclick="pressSideKey('6')">6</button>
+                            <button class="key-btn" onclick="pressSideKey('7')">7</button>
+                            <button class="key-btn" onclick="pressSideKey('8')">8</button>
+                            <button class="key-btn" onclick="pressSideKey('9')">9</button>
+                            <button class="key-btn" onclick="pressSideKey('0')">0</button>
+                            <button class="key-btn" onclick="pressSideKey('00')">00</button>
+                        </div>
                     </div>
 
                     <div id="resultArea" class="hidden result-area space-y-3 mb-6">
@@ -273,6 +272,7 @@ if ('serviceWorker' in navigator) {
                     </div>
                 </div>
 
+                <!-- 右列: 縦切込 -->
                 <div class="split-pane">
                     <div id="heightInputs">
                         <div class="cell-grid">
@@ -285,7 +285,7 @@ if ('serviceWorker' in navigator) {
                                 <div id="display-h_l2" class="input-value">0</div>
                             </div>
                             <div class="calc-cell span-2" onclick="focusInput('h_no')">
-                                <span class="input-label-left text-center">No.</span>
+                                <span class="input-label-left text-center">縦</span>
                                 <div id="display-h_no" class="input-value">1</div>
                             </div>
                             <div class="calc-cell span-4" onclick="focusInput('h_l1')">
@@ -295,25 +295,27 @@ if ('serviceWorker' in navigator) {
                         </div>
                     </div>
 
+                    <!-- 縦切込 テンキー（2行レイアウト: 1行目4キー, 2行目11キー） -->
                     <div class="keypad-container keypad-right">
-                        <button class="key-btn" onclick="pressHeightKey('7')">7</button>
-                        <button class="key-btn" onclick="pressHeightKey('8')">8</button>
-                        <button class="key-btn" onclick="pressHeightKey('9')">9</button>
-                        <button class="key-btn gray" onclick="pressHeightKey('clear')">C</button>
-
-                        <button class="key-btn" onclick="pressHeightKey('4')">4</button>
-                        <button class="key-btn" onclick="pressHeightKey('5')">5</button>
-                        <button class="key-btn" onclick="pressHeightKey('6')">6</button>
-                        <button class="key-btn gray" onclick="pressHeightKey('allClear')">AC</button>
-
-                        <button class="key-btn" onclick="pressHeightKey('1')">1</button>
-                        <button class="key-btn" onclick="pressHeightKey('2')">2</button>
-                        <button class="key-btn" onclick="pressHeightKey('3')">3</button>
-                        <button class="key-btn orange row-span-2 h-full text-[18px]" onclick="pressHeightKey('enter')">保存</button>
-
-                        <button class="key-btn" onclick="pressHeightKey('0')">0</button>
-                        <button class="key-btn" onclick="pressHeightKey('00')">00</button>
-                        <button class="key-btn text-[#0a84ff]" style="font-size: 15px;" onclick="switchTab('history')">履歴</button>
+                        <div class="keypad-row row-top">
+                            <button class="key-btn key-fn clear-btn" onclick="pressHeightKey('clear')">C</button>
+                            <button class="key-btn key-fn clear-btn" onclick="pressHeightKey('allClear')">AC</button>
+                            <button class="key-btn key-fn save-btn" onclick="pressHeightKey('enter')">保存</button>
+                            <button class="key-btn key-fn history-btn" onclick="switchTab('history')">履歴</button>
+                        </div>
+                        <div class="keypad-row row-bottom">
+                            <button class="key-btn" onclick="pressHeightKey('1')">1</button>
+                            <button class="key-btn" onclick="pressHeightKey('2')">2</button>
+                            <button class="key-btn" onclick="pressHeightKey('3')">3</button>
+                            <button class="key-btn" onclick="pressHeightKey('4')">4</button>
+                            <button class="key-btn" onclick="pressHeightKey('5')">5</button>
+                            <button class="key-btn" onclick="pressHeightKey('6')">6</button>
+                            <button class="key-btn" onclick="pressHeightKey('7')">7</button>
+                            <button class="key-btn" onclick="pressHeightKey('8')">8</button>
+                            <button class="key-btn" onclick="pressHeightKey('9')">9</button>
+                            <button class="key-btn" onclick="pressHeightKey('0')">0</button>
+                            <button class="key-btn" onclick="pressHeightKey('00')">00</button>
+                        </div>
                     </div>
 
                     <div id="heightResultArea" class="hidden result-area space-y-3 mb-6">
@@ -399,20 +401,16 @@ if ('serviceWorker' in navigator) {
 
     <!-- 拡大・ピンチ・回転対応ズームモーダル -->
     <div id="zoomModal" class="hidden fixed inset-0 z-[10000] flex flex-col bg-black transition-opacity">
-        <!-- ヘッダー部分 -->
         <div class="absolute top-0 left-0 right-0 p-4 md:p-6 flex justify-end items-center z-[10010]">
             <div class="flex gap-3">
-                <!-- 回転ボタン -->
                 <button type="button" class="text-white bg-white/20 hover:bg-white/30 rounded-full p-2.5 backdrop-blur-md transition-colors" onclick="toggleZoomRotation()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                 </button>
-                <!-- 閉じるボタン -->
                 <button type="button" class="text-white bg-white/20 hover:bg-white/30 rounded-full p-2.5 backdrop-blur-md transition-colors" onclick="closeZoomModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
             </div>
         </div>
-        <!-- 拡大画像コンテナ (touch-noneでスクロールを防止) -->
         <div id="zoomArea" class="flex-1 w-full h-full flex items-center justify-center overflow-hidden touch-none relative">
             <img id="zoomImg" class="max-w-full max-h-full object-contain transition-transform duration-75 ease-out" alt="拡大図面" style="transform-origin: center;">
         </div>
@@ -440,20 +438,28 @@ if ('serviceWorker' in navigator) {
         };
 
         function persist() {
-            localStorage.setItem(STORAGE_KEY_STATE, JSON.stringify({ inputs, currentMode, calcDirection }));
-            localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(historyData));
+            try {
+                localStorage.setItem(STORAGE_KEY_STATE, JSON.stringify({ inputs, currentMode, calcDirection }));
+                localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(historyData));
+            } catch (e) {
+                console.error("Storage save failed:", e);
+            }
         }
 
         function hydrate() {
-            const savedState = localStorage.getItem(STORAGE_KEY_STATE);
-            if (savedState) {
-                const data = JSON.parse(savedState);
-                Object.assign(inputs, data.inputs);
-                currentMode = data.currentMode || 'side';
-                calcDirection = data.calcDirection || 'LtoR';
+            try {
+                const savedState = localStorage.getItem(STORAGE_KEY_STATE);
+                if (savedState) {
+                    const data = JSON.parse(savedState);
+                    Object.assign(inputs, data.inputs);
+                    currentMode = data.currentMode || 'side';
+                    calcDirection = data.calcDirection || 'LtoR';
+                }
+                const savedHistory = localStorage.getItem(STORAGE_KEY_HISTORY);
+                if (savedHistory) historyData = JSON.parse(savedHistory);
+            } catch (e) {
+                console.error("Hydration error:", e);
             }
-            const savedHistory = localStorage.getItem(STORAGE_KEY_HISTORY);
-            if (savedHistory) historyData = JSON.parse(savedHistory);
             
             updateDisplay();
             focusedSideInputId = focusedSideInputId || 'side_l1';
@@ -488,7 +494,6 @@ if ('serviceWorker' in navigator) {
             }
             persist();
         }
-
 
         function refreshFocusedHighlights() {
             document.querySelectorAll('.calc-cell').forEach(el => el.classList.remove('focused'));
@@ -558,12 +563,6 @@ if ('serviceWorker' in navigator) {
 
         function pressHeightKey(key) {
             applyKeyToTarget(key, focusedHeightInputId, 'isOverwriteModeHeight', 'height');
-        }
-
-        function pressKey(key) {
-            const scope = focusedInputId.startsWith('h_') ? 'height' : 'side';
-            if (scope === 'side') pressSideKey(key);
-            else pressHeightKey(key);
         }
 
         function updateDisplay() {
@@ -701,6 +700,7 @@ if ('serviceWorker' in navigator) {
         function openConfirm(action, mode = '') {
             const modal = document.getElementById('customConfirmModal');
             window.pendingAction = { action, mode };
+            const confirmMessage = document.getElementById('confirmMessage');
             confirmMessage.innerText = action === 'all' ? "全ての履歴を一括削除しますか？\n（鍵マークの項目は削除されません）" : `${mode}切込の履歴を削除しますか？\n（鍵マークの項目は削除されません）`;
             modal.classList.remove('hidden');
         }
@@ -743,7 +743,6 @@ if ('serviceWorker' in navigator) {
             if (t) { t.innerText = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 1000); }
         }
 
-        // ---------- ズーム・回転・ピンチ機能 ----------
         let zoomState = { scale: 1, x: 0, y: 0, rotation: 0 };
         let pinchState = { isDragging: false, startX: 0, startY: 0, initialDist: 0, initialScale: 1 };
 
@@ -776,19 +775,13 @@ if ('serviceWorker' in navigator) {
         function toggleZoomRotation() {
             const zoomImg = document.getElementById('zoomImg');
             zoomState.rotation = (zoomState.rotation === 0) ? 90 : 0;
-            
-            // 位置のリセット
             zoomState.x = 0;
             zoomState.y = 0;
             
-            // 回転時に画面いっぱいに表示されるようスケールを自動計算
             if (zoomState.rotation === 90) {
                 const vW = window.innerWidth;
                 const vH = window.innerHeight;
-                // imgタグの元サイズを取得（object-containされているので元の縦横比に基づく）
                 const rect = zoomImg.getBoundingClientRect();
-                // 90度回転時は、元の幅が高さになり、元の高さが幅になる
-                // 安全のため画面の95%程度に収まるスケールを算出
                 const scaleW = (vW * 0.95) / rect.height;
                 const scaleH = (vH * 0.95) / rect.width;
                 zoomState.scale = Math.min(scaleW, scaleH);
@@ -869,44 +862,16 @@ if ('serviceWorker' in navigator) {
 
         window.onload = () => { hydrate(); refreshFocusedHighlights(); };
     </script>
-
-<button id="installBtn" style="position:fixed;right:16px;bottom:20px;z-index:9999;background:#2563eb;color:#fff;border:none;border-radius:14px;padding:12px 16px;font-weight:700;box-shadow:0 10px 24px rgba(0,0,0,.45);display:none;">アプリをインストール</button>
-<div id="iosInstallTip" style="position:fixed;left:16px;right:16px;bottom:20px;z-index:9999;background:rgba(28,28,30,.96);color:#fff;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;display:none;line-height:1.45;">
-  <div>iPhone / iPad はSafariの共有から「ホーム画面に追加」を使ってください。</div>
-  <button type="button" id="closeIosTip" style="margin-top:10px;background:#2c2c2e;color:#fff;border:none;padding:8px 12px;border-radius:10px;">閉じる</button>
-</div>
-<script>
-(() => {
-  const installBtn = document.getElementById('installBtn');
-  const iosTip = document.getElementById('iosInstallTip');
-  const closeIosTip = document.getElementById('closeIosTip');
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-  const isIOS = /iPhone|iPad|iPod/i.test(window.navigator.userAgent || '');
-  let deferredPrompt = null;
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    if (!isStandalone && installBtn) installBtn.style.display = 'block';
-  });
-
-  if (installBtn) {
-    installBtn.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        try { await deferredPrompt.userChoice; } catch(e) {}
-        deferredPrompt = null;
-        installBtn.style.display = 'none';
-        return;
-      }
-      if (isIOS && !isStandalone && iosTip) iosTip.style.display = 'block';
-    });
-  }
-  if (closeIosTip) closeIosTip.addEventListener('click', () => iosTip.style.display = 'none');
-  if (isIOS && !isStandalone && installBtn) installBtn.style.display = 'block';
-})();
-</script>
-
-
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').then((registration) => {
+                    console.log('ServiceWorker registration successful:', registration.scope);
+                }).catch((err) => {
+                    console.error('ServiceWorker registration failed:', err);
+                });
+            });
+        }
+    </script>
 </body>
 </html>
