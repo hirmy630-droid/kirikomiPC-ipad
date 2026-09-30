@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kirikomi-calc-pwa-v20260929-01';
+const CACHE_NAME = 'app-pwa-v20260930-01';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -46,7 +46,8 @@ function isCriticalAsset(request) {
   return isSameOrigin(request) && (
     url.pathname.endsWith('/index.html') ||
     url.pathname.endsWith('/manifest.json') ||
-    url.pathname.endsWith('/sw.js')
+    url.pathname.endsWith('/sw.js') ||
+    url.pathname === '/'
   );
 }
 

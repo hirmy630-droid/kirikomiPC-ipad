@@ -1,10 +1,10 @@
 {
-  "id": "kirikomi-calc-app-v1",
+  "id": "app-pwa-v1",
   "name": "切込寸法計算",
   "short_name": "切込",
   "description": "切込寸法計算 PWA",
   "lang": "ja",
-  "start_url": "./index.html?pwa=1",
+  "start_url": "./index.html?v=20260930",
   "scope": "./",
   "display": "standalone",
   "display_override": [
